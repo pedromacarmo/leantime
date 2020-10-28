@@ -52,6 +52,14 @@ $helper = $this->get('helper');
             weekHeader: leantime.i18n.__("language.weekHeader"),
             isRTL: JSON.parse(leantime.i18n.__("language.isRTL")),
         });
+
+		let hoursToConvert = document.querySelectorAll(".hours-converted");
+
+		for(var i in hoursToConvert){
+			console.log(hoursToConvert[i].innerHTML);
+			let hourMinutSecond = parseFloat(hoursToConvert[i].innerHTML);
+			hoursToConvert[i].innerHTML = `${moment.duration(hourMinutSecond, 'hours').hours()} : ${moment.duration(hourMinutSecond, 'hours').minutes()} : ${moment.duration(hourMinutSecond, 'hours').seconds()}`
+		}
 	});		
         
     
@@ -148,6 +156,8 @@ $helper = $this->get('helper');
           <col class="con1" />
       	  <col class="con0"/>
           <col class="con1" />
+          <col class="con0" />
+      	  <col class="con1"/>
       	  <col class="con0"/>
           <col class="con1" />
       	  <col class="con0"/>
@@ -155,13 +165,13 @@ $helper = $this->get('helper');
       	  <col class="con0"/>
           <col class="con1" />
       	  <col class="con0"/>
-           <col class="con1"/>
 	</colgroup>
 	<thead>
 		<tr>
             <th><?php echo $this->__('label.id'); ?></th>
 			<th><?php echo $this->__('label.date'); ?></th>
 			<th><?php echo $this->__('label.hours'); ?></th>
+			<th><?php echo $this->__('label.hoursConverted'); ?></th>
 			<th><?php echo $this->__('label.plan_hours'); ?></th>
 			<th><?php echo $this->__('label.difference'); ?></th>
 			<th><?php echo $this->__('label.ticket'); ?></th>
@@ -195,6 +205,7 @@ $helper = $this->get('helper');
                 <?php echo$this->getFormattedDateString($row['workDate']); ?>
             </td>
 			<td data-order="<?php $this->e($row['hours']); ?>"><?php $this->e($row['hours']); ?></td>
+			<td data-order="<?php $this->e($row['hours']); ?>" class="hours-converted"><?php $this->e($row['hours']); ?></td>
 			<td data-order="<?php $this->e($row['planHours']); ?>"><?php $this->e($row['planHours']); ?></td>
 			<?php $diff = $row['planHours']-$row['hours']; ?>
 			<td data-order="<?php $diff; ?>"><?php echo $diff; ?></td>
